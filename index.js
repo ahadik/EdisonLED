@@ -11,8 +11,9 @@ var args = minimist(process.argv.slice(2), {
 
 if (args.help) {
   console.log('Usage: color_set [color_value, --hex]');
-  console.log('    color_value: Provide an initial color value if desired in either Hex ("abc123") or RGB ("100 200 250")');
+  console.log('    color_value: Provide an initial color value if desired in either Hex ("abc123") or RGB ("100,200,250")');
   console.log('    --hex:       Set if the provided `color_value` is in Hex form.');
+  console.log('    --pwm:       When set to True, PWM will be used to set LEDs on the pins set in the script. When False, pins will not be set. Leave as False when testing.');
   process.exit();
 }
 
@@ -52,10 +53,15 @@ pinNums.map(function(pinNum, index) {
 });
 
 function parseColorString(color) {
-  if (args.hex && color[0] === '#') {
-    color = color.slice(1);
+
+  if (args.hex) {
+    if (color[0] === '#') {
+      color = color.slice(1);
+    }
+    return hex_rgb.toRGB(color);
   }
-  return hex_rgb.toRGB(color);
+
+  return color.split(/[ ,]+/);
 }
 
 function setColor(rVal, gVal, bVal) {
