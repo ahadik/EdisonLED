@@ -54,14 +54,16 @@ pinNums.map(function(pinNum, index) {
 
 function parseColorString(color) {
 
-  if (args.hex) {
+  var colorArray = color.split(/[ ,]+/);
+
+  if (colorArray.length === 1) {
     if (color[0] === '#') {
       color = color.slice(1);
     }
     return hex_rgb.toRGB(color);
   }
 
-  return color.split(/[ ,]+/);
+  return colorArray;
 }
 
 function setColor(rVal, gVal, bVal) {
@@ -71,6 +73,12 @@ function setColor(rVal, gVal, bVal) {
   console.log('Blue:  '+bVal);
 
   [rVal, gVal, bVal].map(function(value, index) {
+    if (value > 255) {
+      value = 255;
+    } else if (value < 0) {
+      value = 0;
+    }
+
     pins[index].write(value/255);
   });
 }
