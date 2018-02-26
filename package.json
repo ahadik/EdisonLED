@@ -1,0 +1,32 @@
+{
+  "name": "edisonled",
+  "version": "1.0.0",
+  "description": "Node script to control RBG LED strip using mraa library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahadik/EdisonLED.git"
+  },
+  "keywords": [
+    "Edison",
+    "Intel",
+    "LED",
+    "PWM",
+    "Node",
+    "mraa"
+  ],
+  "author": "Alex Hadik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahadik/EdisonLED/issues"
+  },
+  "homepage": "https://github.com/ahadik/EdisonLED#readme",
+  "dependencies": {
+    "hex-rgb-converter": "^0.0.2",
+    "minimist": "^1.2.0",
+    "prompt": "^1.0.0"
+  }
+}
