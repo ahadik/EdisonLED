@@ -3,6 +3,14 @@ var hex_rgb = require('hex-rgb-converter');
 var minimist = require('minimist');
 var prompt = require('prompt');
 
+var express = require("express");
+var app     = express();
+var path    = require("path");
+
+app.use(express.static(__dirname + '/dist/assets'));
+app.use(express.static(__dirname + '/dist/css'));
+app.use(express.static(__dirname + '/dist/scripts'));
+
 var args = minimist(process.argv.slice(2), {
   string: 'lang',           // --lang xml
   boolean: ['version'],     // --version
@@ -100,6 +108,19 @@ if (args._.length) {
 
   setColor(rgbValues[0], rgbValues[1], rgbValues[2]);
 }
+
+app.get('/',function(req,res){
+  var colorQuery = req.query.color;
+  if (colorQuery) {
+    var parsedColor = parseColorString(req.query.color);
+    setColor(parsedColor[0], parsedColor[1], parsedColor[2]);
+  }
+
+  res.sendFile(path.join(__dirname+'/dist/index.html'));
+});
+
+app.listen(1500);
+console.log("Running at Port 1500");
 
 prompt.start();
 
